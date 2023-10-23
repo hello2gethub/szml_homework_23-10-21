@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+      }
+      .box {
+        text-align: center;
+      }
+      button {
+        font-size: 24px;
+        padding: 0 10px;
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1>计数器</h1>
+      <h2 id="showNum"></h2>
+      <div>
+        <button onclick="add()">+</button>
+        <button onclick="reset()">Reset</button>
+        <button onclick="minus()">-</button>
+      </div>
+    </div>
+
+    <script>
+      let num = 0;
+      let numNode = document.getElementById("showNum");
+
+      function add() {
+        updateNum(++num);
+      }
+
+      function reset() {
+        updateNum(0);
+      }
+
+      function minus() {
+        updateNum(--num);
+      }
+
+      const updateNum = (tmp) => {
+        numNode.innerHTML = tmp;
+        if (tmp > 0) {
+          numNode.style.color = "green";
+        } else if (tmp === 0) {
+          numNode.style.color = "#000";
+        } else {
+          numNode.style.color = "red";
+        }
+      };
+      updateNum(0);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Jsq</title>
+
+    <script src="./dist/react.development.min.js"></script>
+    <script src="./dist/react-dom.development.min.js"></script>
+    <script src="./dist/babel.js"></script>
+    <link rel="stylesheet" href="./0_homeWork_Jsq.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      function App() {
+        const [output, setOutput] = React.useState("0");
+        // 处理按键输入
+        function appendToOutput(value) {
+          if (output === "0") {
+            setOutput(value);
+          } else {
+            setOutput(output + value);
+          }
+        }
+
+        // 处理del键
+        function BackSpace() {
+          let str = output;
+          if (str.length > 1) {
+            setOutput(str.slice(0, str.length - 1));
+          } else {
+            setOutput("0");
+          }
+        }
+
+        // 计算
+        // 处理存在根号的情况 但是这里只处理了一个根号，应该循环或深度搜索判断, 并且还只判断了根号在首位的情况，改进一下吧。
+        // 还是有问题，太晚了，不改了。
+        function calculate() {
+          const arr = ["+", "-", "*", "/", "%"];
+          let str = output;
+          while (str.indexOf("√") !== -1) {
+            let tag = str.indexOf("√");
+            console.log("tag--", tag);
+            let str1 = str.substring(0, tag); // 直接拿到根号前的字符串
+            console.log("str1--", str1);
+
+            let index = -1; // 计算根号结束的地方
+            for (let i = 0; i < arr.length; i++) {
+              if (str.substring(tag + 1, str.length).indexOf(arr[i]) !== -1) {
+                index =
+                  str.substring(tag + 1, str.length).indexOf(arr[i]) + tag + 1;
+                break;
+              }
+            }
+            console.log("index--", index);
+            let sqrtNum =
+              index === -1
+                ? str.substring(tag + 1, str.length)
+                : str.substring(tag + 1, index); // 要计算根号的字符串
+            console.log("sqrtNum--", sqrtNum);
+            let str2 = index === -1 ? "" : str.substring(index + 1, str.length);
+            console.log("str2--", str2);
+            // 根号后面的字符串
+            str = str1 + eval(Math.sqrt(sqrtNum)) + str2; // 先计算根号 拼接根号前面的字符串
+          }
+          setOutput(eval(str));
+        }
+
+        // 这里可以写个循环，这太长了
+        return (
+          <>
+            <div className="container">
+              <div className="output">{output}</div>
+              <button
+                className="buttonOfAD"
+                onClick={() => {
+                  setOutput("0");
+                }}
+                id="clear"
+              >
+                AC
+              </button>
+              <button className="buttonOfAD" onClick={BackSpace}>
+                DEL
+              </button>
+              <button
+                className="buttonOfOperation"
+                onClick={() => {
+                  appendToOutput("%");
+                }}
+              >
+                %
+              </button>
+              <button
+                className="buttonOfOperation"
+                onClick={() => {
+                  appendToOutput("√");
+                }}
+              >
+                √
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput("7");
+                }}
+              >
+                7
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput("8");
+                }}
+              >
+                8
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput("9");
+                }}
+              >
+                9
+              </button>
+              <button
+                className="buttonOfOperation"
+                onClick={() => {
+                  appendToOutput("/");
+                }}
+              >
+                /
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput("4");
+                }}
+              >
+                4
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput("5");
+                }}
+              >
+                5
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput("6");
+                }}
+              >
+                6
+              </button>
+              <button
+                className="buttonOfOperation"
+                onClick={() => {
+                  appendToOutput("*");
+                }}
+              >
+                *
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput("1");
+                }}
+              >
+                1
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput("2");
+                }}
+              >
+                2
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput("3");
+                }}
+              >
+                3
+              </button>
+              <button
+                className="buttonOfOperation"
+                onClick={() => {
+                  appendToOutput("-");
+                }}
+              >
+                -
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput(".");
+                }}
+              >
+                .
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  appendToOutput(0);
+                }}
+              >
+                0
+              </button>
+              <button className="button equals" onClick={calculate}>
+                =
+              </button>
+              <button
+                className="buttonOfOperation"
+                onClick={() => {
+                  appendToOutput("+");
+                }}
+              >
+                +
+              </button>
+            </div>
+          </>
+        );
+      }
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React 计数器</title>
+    <script src="./dist/react.development.min.js"></script>
+    <script src="./dist/react-dom.development.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // class ReactJsq extends React.Component {}
+      let num = 0;
+      // React创建节点的API  React.createElement(标签名, {}, innerHtml)
+      const h1 = React.createElement(
+        "h1",
+        { style: { color: "red" }, className: "11" },
+        "计数器"
+      );
+      function h2() {
+        return React.createElement("h2", {}, num);
+      }
+      const addBtn = React.createElement(
+        "button",
+        {
+          onClick: () => {
+            ++num;
+            root.render(
+              React.createElement(
+                "div",
+                {},
+                h1,
+                h2(),
+                addBtn,
+                resetBtn,
+                minuBtn
+              )
+            );
+          },
+        },
+        "+"
+      );
+      const resetBtn = React.createElement(
+        "button",
+        {
+          onClick: () => {
+            num = 0;
+            root.render(
+              React.createElement(
+                "div",
+                {},
+                h1,
+                h2(),
+                addBtn,
+                resetBtn,
+                minuBtn
+              )
+            );
+          },
+        },
+        "Reset"
+      );
+      const minuBtn = React.createElement(
+        "button",
+        {
+          onClick: () => {
+            --num;
+            root.render(
+              React.createElement(
+                "div",
+                {},
+                h1,
+                h2(),
+                addBtn,
+                resetBtn,
+                minuBtn
+              )
+            );
+          },
+        },
+        "-"
+      );
+
+      const box = React.createElement(
+        "div",
+        {},
+        h1,
+        h2(),
+        addBtn,
+        resetBtn,
+        minuBtn
+      );
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(box);
+    </script>
+  </body>
+</html>

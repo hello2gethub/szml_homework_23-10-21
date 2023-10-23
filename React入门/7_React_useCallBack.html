@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React useCallBack</title>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+      }
+      button {
+        margin-right: 5px;
+        font-size: 24px;
+      }
+    </style>
+
+    <script src="./dist/react.development.min.js"></script>
+    <script src="./dist/react-dom.development.min.js"></script>
+    <script src="./dist/babel.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      /***
+       *  2. useCallback
+       *  当一个函数传递给另一个组件用的时候，并且用到了当前组件的state，但是子组件又没有用到父组件的state的时候，它可以把它隔离，防止污染。
+       */
+
+      function Child({ getNum }) {
+        const [time, setTime] = React.useState(Date());
+        React.useEffect(() => {
+          let timer = setInterval(() => {
+            setTime(Date());
+          }, 1000);
+          return () => {
+            clearInterval(timer);
+          };
+        }, []);
+
+        React.useEffect(() => {}, []);
+        return <>北京时间: {time}</>;
+      }
+
+      function App() {
+        const [num, setNum] = React.useState(0);
+        const [show, setShow] = React.useState(false);
+        const Dom1 = React.useRef();
+        function add() {
+          console.log(Dom1.current.innerHTML); // 点击加号时候打印h1标签的文本内容
+          setNum(num + 1);
+        }
+        return (
+          <div>
+            <h1 ref={Dom1}>计数器</h1>
+            <h2
+              style={{ color: num > 0 ? "green" : num < 0 ? "red" : "black" }}
+            >
+              {num}
+            </h2>
+            <button onClick={add}>+</button>
+            <button onClick={() => setNum(0)}>reset</button>
+            <button onClick={() => setNum(num - 1)}>-</button>
+            {num > 0 && <button>status</button>}
+            <button
+              onClick={() => {
+                setShow(!show);
+              }}
+            >
+              {show ? "close" : "show"}
+            </button>
+            <br />
+            {show && <Child getNum={num} />}
+          </div>
+        );
+      }
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

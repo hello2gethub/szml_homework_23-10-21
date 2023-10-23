@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React state</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+      }
+      button {
+        margin-right: 5px;
+        font-size: 24px;
+      }
+    </style>
+    <script src="./dist/react.development.min.js"></script>
+    <script src="./dist/react-dom.development.min.js"></script>
+    <script src="./dist/babel.js"></script>
+  </head>
+  <body>
+    <div id="root2"></div>
+    <script type="text/babel">
+      function App() {
+        const [num, setNum] = React.useState(0);
+        return (
+          <div>
+            <h1>计数器</h1>
+            <h2
+              style={{ color: num > 0 ? "green" : num < 0 ? "red" : "black" }}
+            >
+              {num}
+            </h2>
+            <button onClick={() => setNum(num + 1)}>+</button>
+            <button onClick={() => setNum(0)}>reset</button>
+            <button onClick={() => setNum(num - 1)}>-</button>
+            {num > 0 && <button>status</button>}
+          </div>
+        );
+      }
+      const root = ReactDOM.createRoot(document.getElementById("root2"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

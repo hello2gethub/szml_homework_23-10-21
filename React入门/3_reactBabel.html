@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React JSX</title>
+    <script src="./dist/react.development.min.js"></script>
+    <script src="./dist/react-dom.development.min.js"></script>
+    <script src="./dist/babel.js"></script>
+  </head>
+  <body>
+    <div id="root2"></div>
+    <script type="text/babel">
+      // import { useState } from "react";
+      let num = 0;
+      function App() {
+        // const [num, setNum] = useState(0);
+        function add() {
+          ++num;
+          root.render(<App />);
+        }
+
+        function reset() {
+          num = 0;
+          root.render(<App />);
+        }
+
+        function minus() {
+          --num;
+          root.render(<App />);
+        }
+        return (
+          <div>
+            <h1>计数器</h1>
+            <h2
+              style={{ color: num > 0 ? "green" : num < 0 ? "red" : "black" }}
+            >
+              {num}
+            </h2>
+            <button onClick={add}>+</button>
+            <button onClick={reset}>reset</button>
+            <button onClick={minus}>-</button>
+            {num > 0 && <button>status</button>}
+          </div>
+        );
+      }
+      const root = ReactDOM.createRoot(document.getElementById("root2"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
